@@ -59,7 +59,7 @@ class Loader:
         # handle exceptions with those variables ^
         self.stop()
 
-def writer(path: str, file: str, words: int, files: int):
+def writer(path: str, file: str, stem: str, words: int, files: int):
     """Fonction pour couper les fichiers textes en fichiers de 500 mots chacun
     
     Parameters
@@ -70,7 +70,7 @@ def writer(path: str, file: str, words: int, files: int):
         nom du fichier
     """
     try:
-        f = open(file, "r")     # open the file in reading mode
+        f = open(file, "r", encoding="utf8")     # open the file in reading mode
         if f.mode == 'r':
             i = 1
             word = 0
@@ -82,9 +82,7 @@ def writer(path: str, file: str, words: int, files: int):
 
                     for mot in line:
                         if word == 0:
-                            new = file.split(".")
-                            print(path+new[0]+"-%d.txt"%i)
-                            w = open(path+new[0]+"-%d.txt"%i, 'w')
+                            w = open(path + "/"+ stem + "-%d.txt"%i, 'w')
                         w.write(mot+" ")
                         word+=1
 
@@ -125,6 +123,8 @@ if __name__ == "__main__":
 
     loader = Loader("Loading...", "All done!", 0.05).start()
     for x in os.listdir(args.pathName):
+        #print(args.newPath)
         if isfile(join(args.pathName, x)):
-            writer(args.newPath, join(args.pathName, x), args.words, args.files)  
+            print(join(args.pathName, x))
+            writer(args.newPath, join(args.pathName, x), x.split(".")[0], args.words, args.files)  
     loader.stop()
