@@ -1,0 +1,8 @@
+spacy
+sklearn
+pandas
+matplotlib
+nltk
+numpy
+joblib
+BeautifulSoup4
