@@ -124,7 +124,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     loader = Loader("Loading...", "All done!", 0.05).start()
-
     for x in os.listdir(args.pathName):
         if isfile(join(args.pathName, x)):
             writer(args.newPath, join(args.pathName, x), args.words, args.files)  
