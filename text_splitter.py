@@ -9,9 +9,55 @@
 
 from multiprocessing import Pool
 from os.path import isfile, join
+from itertools import cycle
+from shutil import get_terminal_size
+from threading import Thread
+from time import sleep
 
-import sys, time, os
+import sys, os
 import argparse
+
+class Loader:
+    def __init__(self, desc="Loading...", end="Done!", timeout=0.1):
+        """
+        A loader-like context manager
+
+        Args:
+            desc (str, optional): The loader's description. Defaults to "Loading...".
+            end (str, optional): Final print. Defaults to "Done!".
+            timeout (float, optional): Sleep time between prints. Defaults to 0.1.
+        """
+        self.desc = desc
+        self.end = end
+        self.timeout = timeout
+
+        self._thread = Thread(target=self._animate, daemon=True)
+        self.steps = ["[■□□□□□□□□□]","[■■□□□□□□□□]", "[■■■□□□□□□□]", "[■■■■□□□□□□]", "[■■■■■□□□□□]", "[■■■■■■□□□□]", "[■■■■■■■□□□]", "[■■■■■■■■□□]", "[■■■■■■■■■□]", "[■■■■■■■■■■]"]
+        self.done = False
+
+    def start(self):
+        self._thread.start()
+        return self
+
+    def _animate(self):
+        for c in cycle(self.steps):
+            if self.done:
+                break
+            print(f"\r{self.desc} {c}", flush=True, end="")
+            sleep(self.timeout)
+
+    def __enter__(self):
+        self.start()
+
+    def stop(self):
+        self.done = True
+        cols = get_terminal_size((80, 20)).columns
+        print("\r" + " " * cols, end="", flush=True)
+        print(f"\r{self.end}", flush=True)
+
+    def __exit__(self, exc_type, exc_value, tb):
+        # handle exceptions with those variables ^
+        self.stop()
 
 def writer(path: str, file: str, words: int, files: int):
     """Fonction pour couper les fichiers textes en fichiers de 500 mots chacun
@@ -72,11 +118,14 @@ if __name__ == "__main__":
 
     parser.add_argument("pathName", type=str, help="path of the folder with the original files")
     parser.add_argument("newPath", type=str, help="path to the folder where you store the files")
-    parser.add_argument("words", type=int, default=500, nargs='?', help="number of words per files")
-    parser.add_argument("files", type=int, default=1000, nargs='?', help="number of files to create")
+    parser.add_argument("words", type=int, default=100, nargs='?', help="number of words per files")
+    parser.add_argument("files", type=int, default=5000, nargs='?', help="number of files to create")
 
     args = parser.parse_args()
 
+    loader = Loader("Loading...", "All done!", 0.05).start()
+
     for x in os.listdir(args.pathName):
-            if isfile(join(args.pathName, x)):
-                writer(args.newPath, join(args.pathName, x), args.words, args.files)  
+        if isfile(join(args.pathName, x)):
+            writer(args.newPath, join(args.pathName, x), args.words, args.files)  
+    loader.stop()
