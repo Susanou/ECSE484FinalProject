@@ -15,6 +15,7 @@ from sklearn.naive_bayes import MultinomialNB as naive
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.naive_bayes import ComplementNB
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 from sklearn.base import TransformerMixin
 from sklearn.pipeline import Pipeline
@@ -78,7 +79,10 @@ if __name__ == "__main__":
     languages_data_folder = args.dataPath
     dataset = load_files(languages_data_folder, encoding='ISO-8859-1')
     docs_train, docs_test, labels_train, labels_test = train_test_split(
-        dataset.data, dataset.target, test_size=0.1, random_state=42, shuffle=True)
+        dataset.data, dataset.target, test_size=0.5, random_state=0, shuffle=True)
+
+    print(labels_train)
+    print(labels_test)
 
     vector = CountVectorizer(tokenizer = sentence_tokenizer, ngram_range=(1,1))
 
@@ -86,15 +90,28 @@ if __name__ == "__main__":
 
     pipe = Pipeline(
         [
-            ("cleaner", predictors()),
+            #("cleaner", predictors()),
             ("vect", vector),
-            ('clf', naive())
+            ('clf', naive(alpha=1.0, fit_prior=True))
         ], verbose=True
     )
 
-    pipe.fit(docs_train, labels_train)
+    parameters={
+        'vect__ngram_range': [(1, 1), (1, 2), (1,3), (1,4), (1,5)],
+        'clf__fit_prior': (True, False),
+        'clf__alpha': (1.0, 0.1, 0.5, 2.0, .25, 0.75, 0.002),
+    }
 
-    predicted = pipe.predict(docs_test)
+    gs_clf = GridSearchCV(pipe, parameters, cv=5, n_jobs=-1)
+    gs_clf.fit(docs_train, labels_train)
+
+    print(gs_clf.best_params_)
+
+    predicted = gs_clf.predict(docs_test)
     # Model Accuracy
     print(metrics.classification_report(labels_test, predicted,
                                         target_names=dataset.target_names))
+    cm = metrics.confusion_matrix(labels_test, predicted)
+    print(cm)
+    plt.matshow(cm, cmap=plt.cm.jet)
+    plt.show()
