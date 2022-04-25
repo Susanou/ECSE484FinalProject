@@ -11,6 +11,9 @@ import spacy
 from spacy.lang.fr import French
 from spacy.lang.fr.stop_words import STOP_WORDS
 
+from sklearn.naive_bayes import MultinomialNB as naive
+from sklearn.naive_bayes import BernoulliNB
+from sklearn.naive_bayes import ComplementNB
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 from sklearn.base import TransformerMixin
@@ -83,10 +86,10 @@ if __name__ == "__main__":
 
     pipe = Pipeline(
         [
-            #("cleaner", predictors()),
+            ("cleaner", predictors()),
             ("vect", vector),
-            ('classifier', classifier)
-        ]
+            ('clf', naive())
+        ], verbose=True
     )
 
     pipe.fit(docs_train, labels_train)
