@@ -1,11 +1,11 @@
-lune r√©veille
+lune rÈveille
  Le vampire blafard sur sa couche vermeille;
          Rentre dans ta maison.
  
  Le vent moqueur a pris ta chanson sur son aile,
- Personne ne t'√©coute, et ta cape ruisselle
+ Personne ne t'Ècoute, et ta cape ruisselle
          Des pleurs de l'ouragan...
- Il ne me r√©pond rien; dites quel est cet homme
+ Il ne me rÈpond rien; dites quel est cet homme
  O mort, et savez-vous le nom dont on le nomme!
          Cet homme, c'est don Juan.
  
@@ -16,4 +16,4 @@ lune r√©veille
  
  DON JUAN.
  
- Heureux adolescents, dont le coeur s'ouvre √† 
+ Heureux adolescents, dont le coeur s'ouvre ‡ 

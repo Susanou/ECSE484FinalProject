@@ -3,19 +3,19 @@ GALANTES
  CLAIR DE LUNE
  PANTOMIME
  SUR L'HERBE
- L'ALLÃ‰E
+ L'ALLÉE
  A LA PROMENADE
  DANS LA GROTTE
- LES INGÃ‰NUS
- CORTÃˆGE
+ LES INGÉNUS
+ CORTÈGE
  LES COQUILLAGES
  EN PATINANT
  FANTOCHES
- CYTHÃˆRES
+ CYTHÈRES
  EN BATEAU
  LE FAUNE
  MANDOLINE
- A CLYMÃˆNE
+ A CLYMÈNE
  LETTRE
  LES INDOLENTS
  COLOMBINE
@@ -26,7 +26,7 @@ GALANTES
                     LA BONNE CHANSON
  
  I. Le soleil du matin doucement chauffe et dore.
- II. Toute grÃ¢ce et toutes nuances.
+ II. Toute grâce et toutes nuances.
  III. En robe grise et verte avec des ruches.
  IV. Puisque l'aube grandit, puisque voici l'aurore.
  V. Avant que 

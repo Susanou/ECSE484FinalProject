@@ -2,13 +2,13 @@
  
         MYRTIL, ROSALINDE, SYLVANDRE, CHLORIS
  
-           ROSALINDE, _Ã  Myrtil._
+           ROSALINDE, _à Myrtil._
  Restons.
  
-           CHLORIS, _Ã  Sylvandre_.
+           CHLORIS, _à Sylvandre_.
  
-           FavorisÃ©, vous pouvez dire l'Ãªtre:
- J'aime la danse Ã  m'en jeter par la fenÃªtre,
+           Favorisé, vous pouvez dire l'être:
+ J'aime la danse à m'en jeter par la fenêtre,
  Et si je ne vais pas sur l'herbette avec eux,
  C'est bien pour vous!
  
