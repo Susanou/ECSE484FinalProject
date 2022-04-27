@@ -9,6 +9,8 @@ import string
 import joblib
 import spacy
 
+from os.path import isfile, join
+
 from spacy.lang.fr import French
 from spacy.lang.fr.stop_words import STOP_WORDS
 
@@ -41,7 +43,10 @@ else:
     print("No file")
     exit()
 
-with open("test_poeme_vh.txt", "r") as f:
-    texts.append(f.read())
+for x in os.listdir("test_files"):
+    #print(args.newPath)
+    if isfile(join("test_files", x)):
+        with open(join("test_files", x), "r") as f:
+            texts.append(f.read())
 
 print(dataset.target_names[model.predict(texts)[0]])
