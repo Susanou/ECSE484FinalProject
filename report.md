@@ -25,4 +25,6 @@ With the datasets ready we began to search for the most optimal environment in w
 
 ## Results
 
+`Best seetings = {'clf__alpha': 1.0, 'clf__fit_prior': True, 'vect__ngram_range': (1, 2)}`
+
 ## References

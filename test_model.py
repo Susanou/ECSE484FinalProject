@@ -70,3 +70,12 @@ frame2 = pd.DataFrame(prob, index=labels, columns=dataset.target_names)
 print(frame1) #column 2 is the choice made by the model
 print()
 print(frame2) #probability of being of a label for each text. Index is the actual value
+
+predicted = model.predict(docs_test)
+# Model Accuracy
+print(metrics.classification_report(labels_test, predicted,
+                                    target_names=dataset.target_names))
+cm = metrics.confusion_matrix(labels_test, predicted)
+print(cm)
+plt.matshow(cm, cmap=plt.cm.jet)
+plt.show()
