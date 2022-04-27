@@ -28,6 +28,8 @@ from sklearn import metrics
 
 from utils import Loader
 
+loader = Loader("Loading dataset and model...")
+loader.start()
 
 model = None
 texts = []
@@ -51,8 +53,15 @@ for x in os.listdir("test_files"):
             texts.append(f.read())
             labels.append(x.split("_")[1][:-4])
 
+loader.stop()
+
+predictions = model.predict(texts)
 prob = model.predict_proba(texts)
 probs = np.argsort(prob, axis=1)[:,-3:]
+
+for i,p in enumerate(predictions):
+    if dataset.target_names[p] != labels[i]:
+        print(f"text {i} was classified as {dataset.target_names[p]} when it is of class {labels[i]}")
 
 frame1 = pd.DataFrame(probs, index=labels)
 frame1 = frame1.applymap(lambda x: dataset.target_names[x])
