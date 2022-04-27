@@ -23,6 +23,8 @@ from sklearn.datasets import load_files
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 
+from utils import Loader
+
 #############
 # GLOBAL VARS
 #############
@@ -70,21 +72,28 @@ if __name__ == "__main__":
     global dataset
     global docs_train, docs_test, y_train, y_test
 
+    loader = Loader("Loading dataset...", end="datasets loaded")
+
     arg_parser = argparse.ArgumentParser(description="Script for classifying french poems")
 
-    arg_parser.add_argument("dataPath", default="../dataFitting",nargs='?', type=str, help="Path to the folder where all the text data is stored")
+    arg_parser.add_argument("dataPath", default="../datasets",nargs='?', type=str, help="Path to the folder where all the text data is stored")
 
     args = arg_parser.parse_args()
+
+    loader.start()
 
     languages_data_folder = args.dataPath
     dataset = load_files(languages_data_folder, encoding='ISO-8859-1')
     docs_train, docs_test, labels_train, labels_test = train_test_split(
         dataset.data, dataset.target, test_size=0.5, random_state=0, shuffle=True)
 
-    print(labels_train)
-    print(labels_test)
+    loader.stop()
 
-    vector = CountVectorizer(tokenizer = sentence_tokenizer, ngram_range=(1,1))
+    #print(labels_train)
+    #print(labels_test)
+
+    #vector = CountVectorizer(tokenizer = sentence_tokenizer, ngram_range=(1,1))
+    vector = TfidfVectorizer(ngram_range=(1,1), analyzer='word', use_idf=True)
 
     classifier = LogisticRegression()
 
@@ -114,4 +123,33 @@ if __name__ == "__main__":
     cm = metrics.confusion_matrix(labels_test, predicted)
     print(cm)
     plt.matshow(cm, cmap=plt.cm.jet)
-    plt.show()
+    #plt.show()
+
+    poeme = """
+            Vous qui ne savez pas combien l'enfance est belle,
+            Enfant ! n'enviez point notre âge de douleurs,
+            Où le cœur tour à tour est esclave et rebelle,
+            Où le rire est souvent plus triste que vos pleurs.
+
+            Votre âge insouciant est si doux qu'on l'oublie !
+            Il passe, comme un souffle au vaste champ des airs,
+            Comme une voix joyeuse en fuyant affaiblie,
+            Comme un alcyon sur les mers.
+
+            Oh ! ne vous hâtez point de mûrir vos pensées !
+            Jouissez du matin, jouissez du printemps ;
+            Vos heures sont des fleurs l'une à l'autre enlacées ;
+            Ne les effeuillez pas plus vite que le temps.
+
+            Laissez venir les ans ! le destin vous dévoue,
+            Comme nous, aux regrets, à la fausse amitié,
+            À ces maux sans espoir que l'orgueil désavoue,
+            À ces plaisirs qui font pitié.
+
+            Riez pourtant ! du sort ignorez la puissance
+            Riez ! n'attristez pas votre front gracieux,
+            Votre oeil d'azur, miroir de paix et d'innocence,
+            Qui révèle votre âme et réfléchit les cieux !"
+            """
+    
+    print(dataset.target_names[gs_clf.predict(poeme)])
