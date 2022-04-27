@@ -38,7 +38,7 @@ labels = []
 languages_data_folder = "datasets"
 dataset = load_files(languages_data_folder, encoding='ISO-8859-1')
 docs_train, docs_test, labels_train, labels_test = train_test_split(
-    dataset.data, dataset.target, test_size=0.5, random_state=0, shuffle=True)
+    dataset.data, dataset.target, test_size=0.9, random_state=0, shuffle=True)
 
 if os.path.isfile("model.pkl"):
     model = joblib.load("model.pkl")

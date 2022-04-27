@@ -85,7 +85,7 @@ if __name__ == "__main__":
     languages_data_folder = args.dataPath
     dataset = load_files(languages_data_folder, encoding='ISO-8859-1')
     docs_train, docs_test, labels_train, labels_test = train_test_split(
-        dataset.data, dataset.target, test_size=0.5, random_state=0, shuffle=True)
+        dataset.data, dataset.target, test_size=0.9, random_state=0, shuffle=True)
 
     loader.stop()
 
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     #vector = CountVectorizer(tokenizer = sentence_tokenizer, ngram_range=(1,1))
     vector = TfidfVectorizer(ngram_range=(1,1), analyzer='word', use_idf=True)
 
-    classifier = LogisticRegression()
+    #classifier = LogisticRegression()
 
     pipe = Pipeline(
         [
