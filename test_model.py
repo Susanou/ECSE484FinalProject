@@ -31,6 +31,7 @@ from utils import Loader
 
 model = None
 texts = []
+labels = []
 
 languages_data_folder = "datasets"
 dataset = load_files(languages_data_folder, encoding='ISO-8859-1')
@@ -48,5 +49,15 @@ for x in os.listdir("test_files"):
     if isfile(join("test_files", x)):
         with open(join("test_files", x), "r") as f:
             texts.append(f.read())
+            labels.append(x.split("_")[1][:-4])
 
-print(dataset.target_names[model.predict(texts)[0]])
+prob = model.predict_proba(texts)
+probs = np.argsort(prob, axis=1)[:,-3:]
+
+frame1 = pd.DataFrame(probs, index=labels)
+frame1 = frame1.applymap(lambda x: dataset.target_names[x])
+frame2 = pd.DataFrame(prob, index=labels, columns=dataset.target_names)
+
+print(frame1) #column 2 is the choice made by the model
+print()
+print(frame2) #probability of being of a label for each text. Index is the actual value
