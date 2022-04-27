@@ -44,4 +44,4 @@ else:
 with open("test_poeme_vh.txt", "r") as f:
     texts.append(f.read())
 
-print(datasets.target_names[model.predict(texts)])
+print(dataset.target_names[model.predict(texts)[0]])
