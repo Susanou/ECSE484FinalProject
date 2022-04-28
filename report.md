@@ -25,9 +25,12 @@ With the datasets ready we began to search for the most optimal environment in w
 
 ## Results
 
+Once our model finished its classification it managed to fit our training datasets perfectly. We then collected a group of text files from each author to test our model's accuracy with untrained data. This is were things get complicated, since accuracy seemed to vary significantly between identified authors. Below is a an image of one set of captured results.  The bottom half of the image references the trained data accuracy (which are all values of 1.00).
 
+![Tested Model Output](plots/test_output.png)
 
+The image shows that generally our model was able to classify the author correctly (save for one misclassification), but looking at the accuracy we can see Gautier genrally having the highest confidence while Hugo and Verlaine have the lowest. This discrepency in accuracy could be a result of many factors but one factor could be how different styles of authors changed. The model originally trained on a set of time-period work by the four authors, is not as precise identifying the prose of different periods. One example of this case is the misclassification of a Baudelaire piece to be Gautier.  This piece was significantly longer than previous pieces by the same author with a much more direct and expressive tone.  This shift in prose by Baudelaire is likely why this misclassification occured.
 
-
+Our current conclusion from this project is that classifying author prose is a difficult procedure. Their works can vary from poem to poem and distinct signatures from authors are very hard to come by. This was seen by many low confidence scores in our model testing and a somewhat confident misclassifcation on the models part. It may be more reasonable to classify works based on time period, style, or type (like sonnet, limerick, etc..).
 
 ## References
