@@ -35,7 +35,6 @@ Our current conclusion from this project is that classifying author prose is a d
 
 ## References
 
-
 [1]“sklearn.naive_bayes.MultinomialNB — scikit-learn 1.0.2 documentation,” scikit-learn. https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html (accessed Apr. 27, 2022).
 
 [2]“1.9. Naive Bayes — scikit-learn 1.0.2 documentation,” scikit-learn. https://scikit-learn.org/stable/modules/naive_bayes.html#multinomial-naive-bayes (accessed Apr. 27, 2022).
@@ -43,3 +42,5 @@ Our current conclusion from this project is that classifying author prose is a d
 [3]“Poésie française - 5876 poèmes français célèbres,” Poésie française. https://www.poesie-francaise.fr (accessed Apr. 27, 2022).
 
 [4]“Free eBooks | Project Gutenberg,” Project Gutenberg. https://www.gutenberg.org (accessed Apr. 27, 2022).
+
+[5]“French · spaCy Models Documentation,” French. https://spacy.io/models/fr (accessed Apr. 27, 2022).
