@@ -15,6 +15,8 @@ from sklearn.naive_bayes import MultinomialNB as naive
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.naive_bayes import ComplementNB
 from sklearn.linear_model import LogisticRegression
+from sklearn.neural_network import MLPClassifier
+from sknn.mlp import Classifier, Layer
 from sklearn.model_selection import GridSearchCV
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 from sklearn.base import TransformerMixin
@@ -76,7 +78,7 @@ if __name__ == "__main__":
 
     arg_parser = argparse.ArgumentParser(description="Script for classifying french poems")
 
-    arg_parser.add_argument("dataPath", default="../datasets",nargs='?', type=str, help="Path to the folder where all the text data is stored")
+    arg_parser.add_argument("dataPath", default="datasets",nargs='?', type=str, help="Path to the folder where all the text data is stored")
 
     args = arg_parser.parse_args()
 
@@ -96,22 +98,26 @@ if __name__ == "__main__":
     vector = TfidfVectorizer(ngram_range=(1,1), analyzer='word', use_idf=True)
 
     #classifier = LogisticRegression()
+    clf = naive(alpha=1.0, fit_prior=True)
+
 
     pipe = Pipeline(
         [
             #("cleaner", predictors()),
             ("vect", vector),
-            ('clf', naive(alpha=1.0, fit_prior=True))
+            ('neural network', clf)
         ], verbose=True
     )
 
     parameters={
         'vect__ngram_range': [(1, 1), (1, 2), (1,3), (1,4), (1,5)],
-        'clf__fit_prior': (True, False),
-        'clf__alpha': (1.0, 0.1, 0.5, 2.0, .25, 0.75, 0.002),
+        #'clf__fit_prior': (True, False),
+        'learning_rate': [0.05, 0.01, 0.005, 0.001],
+        #'clf__alpha': (1.0, 0.1, 0.5, 2.0, .25, 0.75, 0.002),
+        #'clg__learning_rule': ('lbfgs', 'adam', 'sgd'),
     }
 
-    gs_clf = GridSearchCV(pipe, parameters, cv=5, n_jobs=-1)
+    gs_clf = GridSearchCV(pipe, parameters)#, cv=5, n_jobs=-1)
     gs_clf.fit(docs_train, labels_train)
 
     print(gs_clf.best_params_)
@@ -125,4 +131,4 @@ if __name__ == "__main__":
     plt.matshow(cm, cmap=plt.cm.jet)
     #plt.show()
 
-    joblib.dump(gs_clf, "model.pkl")
+    joblib.dump(gs_clf, "model_ANN.pkl")
