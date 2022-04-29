@@ -37,12 +37,13 @@ tf.config.set_soft_device_placement(True)
 #tf.debugging.set_log_device_placement(True) #uncomment if need to check that it is executing off of GPU
 tf.get_logger().setLevel('ERROR')
 
+@tf.keras.utils.register_keras_serializable()
 def custom_standardization(input_data):
   lowercase = tf.strings.lower(input_data)
   stripped_html = tf.strings.regex_replace(lowercase, '<br />', ' ')
   return tf.strings.regex_replace(stripped_html,
                                   '[%s]' % re.escape(string.punctuation),
-                                '')
+                                  '')
 
 # Basic function to clean the text
 def clean_text(text):

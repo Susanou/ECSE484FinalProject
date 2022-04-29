@@ -23,6 +23,14 @@ from tensorflow.keras import losses
 from utils import Loader
 
 
+@tf.keras.utils.register_keras_serializable()
+def custom_standardization(input_data):
+  lowercase = tf.strings.lower(input_data)
+  stripped_html = tf.strings.regex_replace(lowercase, '<br />', ' ')
+  return tf.strings.regex_replace(stripped_html,
+                                  '[%s]' % re.escape(string.punctuation),
+                                  '')
+
 loader = Loader("Loading dataset and model...")
 #loader.start()
 
@@ -44,6 +52,8 @@ for x in os.listdir("test_files"):
             labels.append(x.split("_")[1][:-4])
 
 predictions = model.predict(texts)
+#print(predictions)
 for i,p in enumerate(predictions):
-    if raw_ds.class_names[p] != labels[i]:
-        print(f"text {i} was classified as {raw_ds.class_names[p]} when it is of class {labels[i]}")
+    #print(p)
+    if raw_ds.class_names[np.argmax(p)] != labels[i]:
+        print(f"text {i} was classified as {raw_ds.class_names[np.argmax(p)]} when it is of class {labels[i]}")
