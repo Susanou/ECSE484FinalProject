@@ -56,4 +56,5 @@ predictions = model.predict(texts)
 for i,p in enumerate(predictions):
     #print(p)
     if raw_ds.class_names[np.argmax(p)] != labels[i]:
+        #print(np.argmax(p))
         print(f"text {i} was classified as {raw_ds.class_names[np.argmax(p)]} when it is of class {labels[i]}")
