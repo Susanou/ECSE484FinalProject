@@ -27,6 +27,26 @@ Since we were having difficulty using sklearn multi-classification neural networ
 
 ## Results
 
+### Tensorflow Model
+
+Tensorflow offers a good history function that gave use the following two graphs corresponding respectively to the accuracy and the loss of our model on a subset of our training dataset we used for validation:
+
+![acc](plots/acc_plot.png){width=50%}
+![loss](plots/loss_plot.png){width=50%}
+\begin{figure}[!h]
+\caption{Tensorflow model accuracy and loss}
+\end{figure}
+
+From both plots, we can say that our model achieves pretty good accuracy.
+However, when testing it on poems from each others that weren't in the same collections as the poems we had sampled originally, this model ends up classifying all texts under the same label.
+
+![tensor output](plots/tensor_ouptut.png)
+
+Our original hypothesis was that the `verlaine` class must've been class 0 or 1 and that our model was only doing binary classification.
+However, it turns out that `verlaine` corresponds to class 3 in our dataset. Our conclusion is that the neural network couldn't pick up the differences in style because the authors we our dataset in such a way that only the prose might be different. Since all the authors are from the same literary era, style issues would've been minimized, they also lived around the same time so the language as well was pretty much identical between all authors.
+
+### Sklearn Model
+
 Once our model finished its classification it managed to fit our training datasets perfectly. We then collected a group of text files from each author to test our model's accuracy with untrained data. This is were things get complicated, since accuracy seemed to vary significantly between identified authors. Below is a an image of one set of captured results.  The bottom half of the image references the trained data accuracy (which are all values of 1.00).
 
 ![Tested Model Output](plots/test_output.png)
